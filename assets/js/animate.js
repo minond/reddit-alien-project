@@ -14,13 +14,27 @@ function handleWave() {
     });
 }
 
+/**
+ * @param {Number} deg degrees to move antenna by
+ * @param {Number} time transition time
+ * @param {Function} cb transtion end callback
+ * @return {jQuery} returns the jqueryfid antenna node
+ */
 function moveAntenna(deg, time, cb) {
-    $('#reddit-alien .antenna').css({
+    return $('#reddit-alien .antenna').css({
         transition: time + 's',
         transform: 'rotate(' + deg + 'deg)'
     }).one(TRANSITION_EVENTS, cb || function () {});
 }
 
+/**
+ * @param {Number} top ear's y (top) axis movement
+ * @param {Number} left left ear's x (left) axis movement
+ * @param {Number} right right ear's x (left) axis movement
+ * @param {Number} time transition time
+ * @param {Function} cb transtion end callback
+ * @return {jQuery} returns the jqueryfid ear nodes
+ */
 function wiggleEars(top, left, right, time, cb) {
     $('#reddit-alien .ear.left').css({
         transition: time + 's',
@@ -33,10 +47,14 @@ function wiggleEars(top, left, right, time, cb) {
         top: top,
         left: right
     }).one(TRANSITION_EVENTS, cb || function () {});
+
+    return $('#reddit-alien .ear');
 }
 
-initializeWebcamSwiper();
+$(function () {
+    initializeWebcamSwiper();
 
-$('body')
-    .bind('webcamSwipeLeft', handleWave)
-    .bind('webcamSwipeRight', handleWave);
+    $('body')
+        .bind('webcamSwipeLeft', handleWave)
+        .bind('webcamSwipeRight', handleWave);
+});
